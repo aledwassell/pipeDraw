@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from "@angular/material";
-
+import { HttpClientModule } from "@angular/common/http"
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './_components/nav-bar/nav-bar.component';
 
@@ -14,6 +14,7 @@ import { NavBarComponent } from './_components/nav-bar/nav-bar.component';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        HttpClientModule,
         MatToolbarModule,
         MatSidenavModule,
         MatListModule,

@@ -8,10 +8,12 @@ import { HttpClient } from "@angular/common/http";
 })
 export class GetDataService {
 
+  genericUrl = 'https://jsonplaceholder.typicode.com/posts';
+
   constructor(private http: HttpClient) { }
 
   getData(): Observable<Generic[]> {
-    return this.http.get<Generic[]>('https://jsonplaceholder.typicode.com/posts');
+    return this.http.get<Generic[]>(this.genericUrl);
   }
 
 }
