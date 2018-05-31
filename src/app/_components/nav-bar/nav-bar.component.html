@@ -1,3 +1,10 @@
-<p>
-  nav-bar works!
-</p>
+<ul>
+  <li *ngFor="let d of data">
+    <h1>
+      {{d.title}}
+    </h1>
+    <p>
+      {{d.body}}
+    </p>
+  </li>
+</ul>

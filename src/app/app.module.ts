@@ -5,11 +5,13 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
 import { HttpClientModule } from "@angular/common/http"
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './_components/nav-bar/nav-bar.component';
+import { PhotosComponent } from './_components/photos/photos.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavBarComponent
+        NavBarComponent,
+        PhotosComponent
     ],
     imports: [
         BrowserModule,
