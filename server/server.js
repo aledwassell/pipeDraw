@@ -17,4 +17,4 @@ io.sockets.on('connection', (socket) => {
     socket.emit('hello', {
         greeting: 'Hello You!!'
     })
-})
+});
