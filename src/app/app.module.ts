@@ -6,6 +6,8 @@ import { HttpClientModule } from "@angular/common/http"
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './_components/nav-bar/nav-bar.component';
 import { PhotosComponent } from './_components/photos/photos.component';
+import { SharedModule } from './shared/shared.module';
+import { ChatModule } from './chat/chat.module';
 
 @NgModule({
     declarations: [
@@ -21,7 +23,9 @@ import { PhotosComponent } from './_components/photos/photos.component';
         MatSidenavModule,
         MatListModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        SharedModule,
+        ChatModule
     ],
     providers: [
     ],

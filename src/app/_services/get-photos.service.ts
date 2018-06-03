@@ -11,6 +11,6 @@ export class GetPhotosService {
   constructor(private http: HttpClient) { }
 
   getPhotos(): Observable<photoSet[]> {
-    return this.http.post<photoSet[]>('/sets', this.setId);
+    return this.http.post<photoSet[]>('/api/sets', this.setId);
   }
 }
