@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import * as socketIo from 'socket.io-client';
+import * as socketIo from 'socket.io-client';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'Hello';
+  serverUrl: 'http://localhost:3000/';
   constructor() {}
   ngOnInit(): void {
-    // const socket = socketIo('http://localhost:3000/');
-    // socket.on('hello', (data) => console.log(data));
+    const socket = socketIo(this.serverUrl);
+    socket.on('hello', (data) => console.log(data));
   }
 }
