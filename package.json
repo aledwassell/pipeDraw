@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "nodemon server/server.js",
+    "server": "nodemon server.js",
     "serve": "npm run start | npm run server"
   },
   "private": true,

@@ -8,7 +8,7 @@ import * as socketIo from 'socket.io-client';
 })
 export class AppComponent implements OnInit {
   title = 'Hello';
-  serverUrl: 'http://localhost:3000/';
+  serverUrl: 'http://localhost:5000/';
   constructor() {}
   ngOnInit(): void {
     const socket = socketIo(this.serverUrl);
