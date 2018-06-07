@@ -4,11 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './_components/chat/chat.component';
+import { MineComponent } from "./_components/mine/mine.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        ChatComponent
+        ChatComponent,
+        MineComponent
     ],
     imports: [
         BrowserModule,
