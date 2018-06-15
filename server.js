@@ -1,7 +1,9 @@
 const app = require('express')();
 const http = require('http').Server(app);
+const PORT = process.env.port || 5000;
+const server = app.listen(PORT)
 const io = require('socket.io')(http);
-const PORT = 5000;
+
 
 io.on('connection', (socket) => {
     console.log('connected');

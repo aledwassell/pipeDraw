@@ -1,5 +1,5 @@
 <form>
-  <input formControl="name" #name type="text">
+  <input formControl="name" #name type="text" required appValidate>
   <button (click)="sendMessage(name.value)">send message</button>
 </form>
 
