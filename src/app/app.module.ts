@@ -4,15 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './_components/chat/chat.component';
-import { MineComponent } from "./_components/mine/mine.component";
 import { ValidateDirective } from './_directives/validate.directive';
+import { CanvasComponent } from './_components/canvas/canvas.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ChatComponent,
-        MineComponent,
-        ValidateDirective
+        ValidateDirective,
+        CanvasComponent
     ],
     imports: [
         BrowserModule,
