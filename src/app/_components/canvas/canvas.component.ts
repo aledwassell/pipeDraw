@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from "../../_services/chat.service";
 import * as p5 from 'p5';
 
 @Component({
@@ -14,20 +15,22 @@ export class CanvasComponent implements OnInit {
         this.createCanvas();
     }
 
+
     private createCanvas() {
         this.p5 = new p5(this.sketch);
     }
 
     private sketch(p: any) {
+    console.log(p);
         p.setup = () => {
-            p.createCanvas(800, 600);
+          p.createCanvas(p.windowWidth, p.windowHeight).parent('canvas');
+          p.background(255);
         };
 
         p.draw = () => {
-            p.background(200);
-            p.fill(255);
+            p.fill(0);
             p.noStroke();
-            p.ellipse(400, 300, 50, 50);
+            p.ellipse(p.mouseX, p.mouseY, 50, 50);
         };
     }
 
