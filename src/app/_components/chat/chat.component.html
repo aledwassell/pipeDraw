@@ -1,7 +1,8 @@
 <form>
   <input formControl="name" #name type="text" required appValidate>
-  <button (click)="sendMessage(name.value)">send message</button>
+  <button (click)="sendData(name.value)">send message</button>
 </form>
+<p>{{stockQuote | json}}</p>
 
 
 
