@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Pen } from "../../_interfaces/pen";
 import { WebsocketService } from "../../_services/websocket.service";
+import { Sketch } from "../../_interfaces/sketch"
 import { Subscription } from "rxjs/index"
 import * as P5 from 'p5';
 
@@ -10,18 +10,17 @@ import * as P5 from 'p5';
   styleUrls: ['./canvas.component.css']
 })
 export class CanvasComponent implements OnInit {
-  pen: Pen;
+  sketch: Sketch;
   sub: Subscription;
   p5: any;
   constructor(private webSocket: WebsocketService) { }
 
     ngOnInit() {
         this.createCanvas();
-        // this.sub = this.webSocket.getData()
-        //     .subscribe(d => {
-        //         console.log(d);
-        //         this.pen = d;
-        //     });
+        this.sub = this.webSocket.getData()
+            .subscribe(d => {
+                this.sketch = d;
+            });
     }
 
 

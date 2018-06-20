@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WebsocketService } from "../../_services/websocket.service"
 import { FormControl, FormGroup } from '@angular/forms';
-import { Pen } from "../../_interfaces/pen"
+import {Pen, Sketch} from "../../_interfaces/sketch"
 import { Subscription } from "rxjs/index"
 
 @Component({
@@ -10,20 +10,23 @@ import { Subscription } from "rxjs/index"
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  name = new FormControl();
-  stockQuote: Pen;
-  message: Pen;
-  sub: Subscription;
-  constructor(private webSocket: WebsocketService) { }
-  sendData(msg) {
-    this.webSocket.sendData(msg);
-  }
+    data: Sketch;
+    sub: Subscription;
+
+    constructor(private dataService: WebsocketService) { }
+
     ngOnInit() {
-        this.webSocket.message.subscribe(msg => {
-          console.log(msg);
-      });
-  }
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+        this.sub = this.dataService.getData()
+            .subscribe(d => {
+                this.data = d;
+            });
+    }
+
+    sendData(): void {
+      this.dataService.sendData({x: 30, y: 30});
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
 }
