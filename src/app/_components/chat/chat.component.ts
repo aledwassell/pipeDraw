@@ -30,9 +30,9 @@ export class ChatComponent implements OnInit, OnDestroy {
                 this.data = d;
             });
 
-        this.messageSubscription = this.dataService.getMessages()
+        this.messageSubscription = this.dataService.messages()
             .subscribe(
-                  m => this.messages.push(m)
+                  m => console.log(m)
             );
     }
 

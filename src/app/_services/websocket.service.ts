@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable, observable, Observer, Subject} from "rxjs";
 import { Sketch } from "../_interfaces/sketch"
 import * as socketIo from 'socket.io-client';
@@ -11,7 +11,7 @@ import {Socket} from "../_interfaces/socket";
 export class WebsocketService {
     socket: Socket;
     observer: Observer<any>;
-    message: Observer<string>;
+    _messages: string;
     getData(): Observable<Sketch> {
         this.socket = socketIo('http://localhost:3200');
         this.socket.on('data', (res) => {
@@ -29,13 +29,12 @@ export class WebsocketService {
         this.socket.emit('message', m.value);
     }
 
-    getMessages(): Observable<string> {
+    messages(): Observable<string> {
         this.socket = socketIo('http://localhost:3200');
-        this.socket.on('message', m => {
-            console.log(m);
-            this.message.next(m);
+        this.socket.on('message', (res) => {
+            this._messages = res;
         });
-        return this.createObservable(this.message);
+        return this._messages;
     }
 
     createObservable(obs): Observable<any> {
