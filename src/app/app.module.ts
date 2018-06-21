@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ChatComponent } from './_components/chat/chat.component';
 import { ValidateDirective } from './_directives/validate.directive';
 import { CanvasComponent } from './_components/canvas/canvas.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,9 @@ import { CanvasComponent } from './_components/canvas/canvas.component';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [
     ],

@@ -10,7 +10,7 @@ import * as P5 from 'p5';
   styleUrls: ['./canvas.component.css']
 })
 export class CanvasComponent implements OnInit {
-  sketch: Sketch;
+  brush: Sketch;
   sub: Subscription;
   p5: any;
   constructor(private webSocket: WebsocketService) { }
@@ -19,11 +19,9 @@ export class CanvasComponent implements OnInit {
         this.createCanvas();
         this.sub = this.webSocket.getData()
             .subscribe(d => {
-                this.sketch = d;
+                this.brush = d;
             });
     }
-
-
     private createCanvas() {
         this.p5 = new P5(this.sketch);
     }

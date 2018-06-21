@@ -16,6 +16,11 @@ io.on('connection', socket => {
         io.emit('data', d)
     });
 
+    socket.on('message', (m) => {
+        console.log(`data from client "${m}"`);
+        io.emit('message', m)
+    });
+
     socket.on('disconnect', () => {
         sockets.delete(socket);
         console.log('disconnected');
