@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WebsocketService } from "../../_services/websocket.service"
 import { FormControl } from '@angular/forms';
-import {Sketch} from "../../_interfaces/sketch"
 import { Subscription } from "rxjs/index"
 
 @Component({
   selector: 'app-chat',
   template: `
-      <input [formControl]="message">
-      <button (click)="sendMessage()">send</button>
+      <form (keydown)="keyDownEnter($event)">
+          <input [formControl]="message">
+          <button (click)="sendMessage()">send</button>    
+      </form>
       <div *ngIf="messages">
           <p *ngFor="let m of messages">{{m}}</p>
       </div>
@@ -16,31 +17,32 @@ import { Subscription } from "rxjs/index"
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-    data: Sketch;
-    dataSubscription: Subscription;
     messageSubscription: Subscription;
     message = new FormControl;
-    messages: Array<string>;
+    messages = Array<string>;
 
     constructor(private dataService: WebsocketService) { }
 
     ngOnInit() {
-        this.dataSubscription = this.dataService.getData()
-            .subscribe(d => {
-                this.data = d;
-            });
-
-        this.messageSubscription = this.dataService.messages()
+        this.messageSubscription = this.dataService.getMessages()
             .subscribe(
-                  m => console.log(m)
+                  m => this.messages.push(m.message)
             );
+    }
+
+    keyDownEnter(event) {
+        if(event.keyCode === 13) {
+            this.dataService.sendMessage(this.message);
+            this.message.reset();
+        }
     }
 
     sendMessage(): void {
         this.dataService.sendMessage(this.message);
+        this.message.reset();
     }
 
     ngOnDestroy() {
-        this.dataSubscription.unsubscribe();
+        this.messageSubscription.unsubscribe();
     }
 }

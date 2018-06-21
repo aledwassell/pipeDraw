@@ -6,7 +6,10 @@ import * as P5 from 'p5';
 
 @Component({
   selector: 'app-canvas',
-  templateUrl: './canvas.component.html',
+  template: `
+      {{brush | json}}
+      <div id="canvas"></div>
+  `,
   styleUrls: ['./canvas.component.css']
 })
 export class CanvasComponent implements OnInit {
@@ -17,10 +20,10 @@ export class CanvasComponent implements OnInit {
 
     ngOnInit() {
         this.createCanvas();
-        this.sub = this.webSocket.getData()
-            .subscribe(d => {
-                this.brush = d;
-            });
+        this.sub = this.webSocket.getDrawData()
+            .subscribe(
+                data => this.brush = data
+            );
     }
     private createCanvas() {
         this.p5 = new P5(this.sketch);
@@ -35,7 +38,8 @@ export class CanvasComponent implements OnInit {
         p.mouseDragged = () => {
             p.fill(0);
             p.noStroke();
-            p.ellipse(p.mouseX, p.mouseY, 10, 10);
+            // p.ellipse(p.mouseX, p.mouseY, 10, 10);
+            p.ellipse(this.brush.x, this.brush.y, 10, 10);
         };
 
         p.draw = () => {

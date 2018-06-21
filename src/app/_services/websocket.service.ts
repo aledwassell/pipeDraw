@@ -1,7 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, observable, Observer, Subject} from "rxjs";
 import { Sketch } from "../_interfaces/sketch"
-import * as socketIo from 'socket.io-client';
+import * as io from 'socket.io-client';
 import { FormControl } from "@angular/forms"
 import {Socket} from "../_interfaces/socket";
 
@@ -9,37 +9,39 @@ import {Socket} from "../_interfaces/socket";
     providedIn: 'root'
 })
 export class WebsocketService {
-    socket: Socket;
-    observer: Observer<any>;
-    _messages: string;
-    getData(): Observable<Sketch> {
-        this.socket = socketIo('http://localhost:3200');
-        this.socket.on('data', (res) => {
-            console.log(res);
-            this.observer.next(res);
-        });
-        return this.createObservable(this.observer);
+    private url = 'http://localhost:3200';
+    private drawSocket: Socket;
+    private drawObserver: Observer<any>;
+    private socket: Socket;
+    private observer: Observer<any>;
+
+    sendDrawData(d: Sketch): void {
+        this.socket.emit('data', d);
     }
 
-    sendData(d: Sketch): void {
-        this.socket.emit('data', d);
+    getDrawData(): Observable<Sketch> {
+        let observable = new Observable(observer => {
+            this.drawSocket = io(this.url);
+            this.drawSocket.on('data', (res) => {
+                observer.next(res);
+            });
+            return;
+        });
+        return observable;
     }
 
     sendMessage(m: FormControl): void {
         this.socket.emit('message', m.value);
     }
 
-    messages(): Observable<string> {
-        this.socket = socketIo('http://localhost:3200');
-        this.socket.on('message', (res) => {
-            this._messages = res;
+    getMessages(): Observable<any> {
+        let observable = new Observable(observer => {
+            this.socket = io(this.url);
+            this.socket.on('message', data => {
+                observer.next(data);
+            });
+            return;
         });
-        return this._messages;
-    }
-
-    createObservable(obs): Observable<any> {
-        return new Observable(observer => {
-            obs = observer;
-        });
+        return observable;
     }
 }
