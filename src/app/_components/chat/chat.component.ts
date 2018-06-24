@@ -19,7 +19,7 @@ import { Subscription } from "rxjs/index"
 export class ChatComponent implements OnInit, OnDestroy {
     messageSubscription: Subscription;
     message = new FormControl;
-    messages = Array<string>;
+    messages = [];
 
     constructor(private dataService: WebsocketService) { }
 
@@ -31,7 +31,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     keyDownEnter(event) {
-        if(event.keyCode === 13) {
+        if (event.keyCode === 13) {
             this.dataService.sendMessage(this.message);
             this.message.reset();
         }

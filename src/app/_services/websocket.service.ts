@@ -19,7 +19,7 @@ export class WebsocketService {
         this.socket.emit('data', d);
     }
 
-    getDrawData(): Observable<Sketch> {
+    getDrawData(): Observable<any> {
         let observable = new Observable(observer => {
             this.drawSocket = io(this.url);
             this.drawSocket.on('data', (res) => {
