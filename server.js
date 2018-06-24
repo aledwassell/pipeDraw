@@ -10,7 +10,6 @@ const app = require('express')(),
 io.on('connection', socket => {
     sockets.add(socket);
     console.log(`socket id:${socket.id} added`);
-    io.emit('data', {x: 25, y:43});
 
     socket.on('data', (d) => {
         console.log(`data from client ${d.x} ${d.y}`);

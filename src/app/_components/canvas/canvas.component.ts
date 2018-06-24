@@ -8,9 +8,7 @@ import * as P5 from 'p5';
   selector: 'app-canvas',
   template: `
       {{data | json}}
-      {{p5.mouseX | json}}
-      {{p5.mouseY | json}}
-      {{p5.mouseDown | json}}
+      
       <div id="canvas"></div>
   `,
   styleUrls: ['./canvas.component.css']
@@ -35,6 +33,7 @@ export class CanvasComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
+                    this.draw(data);
                 }
             );
         this.drawObservable.subscribe(
@@ -53,5 +52,13 @@ export class CanvasComponent implements OnInit {
           p.createCanvas(p.windowWidth, p.windowHeight).parent('canvas');
           p.background(255);
         };
+    }
+
+    private draw(data: Sketch){
+      this.p5.draw = () => {
+          this.p5.fill(0);
+          this.p5.noStroke();
+          this.p5.ellipse(data.x, data.y, 10, 10);
+      }
     }
 }
