@@ -5,3 +5,6 @@
 	justify-content: center;
 	align-items: center;
 }
+mat-sidenav {
+	width: 500px;
+}

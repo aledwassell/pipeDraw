@@ -1,4 +1,17 @@
-<app-toolbar></app-toolbar>
-<div class="canvas-container">
-    <app-canvas></app-canvas>
-</div>
+
+
+<mat-sidenav-container style="height: 100vh;">
+    <mat-sidenav position="end" #sidenav mode="side">
+        <app-toolbar></app-toolbar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <button mat-fab (click)="sidenav.toggle()">
+            <!--<mat-icon>arrow_back_ios</mat-icon>-->
+            <mat-icon>settings</mat-icon>
+        </button>
+        <div class="canvas-container">
+            <app-canvas></app-canvas>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

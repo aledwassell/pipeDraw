@@ -17,7 +17,7 @@ import {
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSidenavModule
+    MatSidenavModule, MatOptionModule, MatSelectModule, MatIconModule
 } from '@angular/material';
 
 @NgModule({
@@ -41,6 +41,9 @@ import {
         MatFormFieldModule,
         MatInputModule,
         MatSidenavModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatIconModule,
         ColorPickerModule,
         ColorSketchModule,
         ColorSwatchesModule
