@@ -7,15 +7,8 @@ import {Subscription} from "rxjs/index";
     selector: 'app-chat',
     template: `
         <form (keydown)="keyDownEnter($event)">
-            <mat-form-field>
-                <input matInput placeholder="Input">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput placeholder="Chat" [formControl]="message">
-            </mat-form-field>
-
-            <button (click)="sendMessage()">send</button>
-
+            <input matInput placeholder="Chat">
+            <button mat-raised-button (click)="sendMessage()">send</button>
         </form>
         <div *ngIf="messages">
             <p *ngFor="let m of messages">{{m}}</p>

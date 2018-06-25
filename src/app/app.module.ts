@@ -2,25 +2,30 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from '@angular/cdk/layout';
 import { AppComponent } from './app.component';
+import { ToolbarComponent } from './_components/toolbar/toolbar.component';
 import { ChatComponent } from './_components/chat/chat.component';
 import { CanvasComponent } from './_components/canvas/canvas.component';
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorSketchModule } from "ngx-color/sketch";
+import { ColorSwatchesModule } from 'ngx-color/swatches';
 import {
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule
 } from '@angular/material';
-import { ToolbarComponent } from './_components/toolbar/toolbar.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        ToolbarComponent,
         ChatComponent,
-        CanvasComponent,
-        ToolbarComponent
+        CanvasComponent
     ],
     imports: [
         BrowserModule,
@@ -29,7 +34,16 @@ import { ToolbarComponent } from './_components/toolbar/toolbar.component';
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MatButtonModule, MatCheckboxModule, MatToolbarModule, MatFormFieldModule, MatInputModule
+        LayoutModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSidenavModule,
+        ColorPickerModule,
+        ColorSketchModule,
+        ColorSwatchesModule
     ],
     providers: [
     ],
