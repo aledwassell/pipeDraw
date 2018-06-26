@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from "../../_services/websocket.service";
 import { Sketch } from "../../_interfaces/sketch"
-import {BehaviorSubject, Observable, Observer, Subscription, Subject} from "rxjs/index"
+import {Observable, Subscription} from "rxjs/index"
 import * as P5 from 'p5';
 
 @Component({
   selector: 'app-canvas',
-  template: `
-      {{data | json}}
-      
+  template: `      
       <div id="canvas"></div>
   `,
   styleUrls: ['./canvas.component.css']
@@ -49,7 +47,7 @@ export class CanvasComponent implements OnInit {
 
     private sketch(p: any) {
         p.setup = () => {
-          p.createCanvas(p.windowWidth, p.windowHeight).parent('canvas');
+          p.createCanvas(p.windowWidth - 2, p.windowHeight - 4).parent('canvas');
           p.background(255);
         };
     }

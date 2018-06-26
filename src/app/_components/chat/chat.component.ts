@@ -1,26 +1,37 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {WebsocketService} from "../../_services/websocket.service"
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup,  ReactiveFormsModule} from '@angular/forms';
 import {Subscription} from "rxjs/index";
 
 @Component({
     selector: 'app-chat',
     template: `
-        <form (keydown)="keyDownEnter($event)">
-            <mat-form-field>
-                <input matInput placeholder="Chat">
-                <button mat-raised-button (click)="sendMessage()">send</button>
-            </mat-form-field>
+        <form [formGroup]="messagesForm" (keydown)="keyDownEnter($event)">
+            <section>
+                <mat-form-field>
+                    <input matInput required formControlName="message" placeholder="Your name">
+                </mat-form-field>
+                <button [disabled]="messagesForm.invalid" mat-raised-button (click)="sendMessage()">send</button>
+            </section>
+            <section>
+                <mat-form-field>
+                    <input matInput required formControlName="message" placeholder="Chat">
+                </mat-form-field>
+                <button [disabled]="messagesForm.invalid" mat-raised-button (click)="sendMessage()">send</button>
+            </section>
+            
         </form>
-        <div *ngIf="messages">
-            <p *ngFor="let m of messages">{{m}}</p>
-        </div>
+        <ul *ngIf="messages">
+            <li *ngFor="let m of messages">{{m}}</li>
+        </ul>
     `,
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
     messageSubscription: Subscription;
-    message = new FormControl;
+    messagesForm = new FormGroup ({
+        message: new FormControl()
+    });
     messages = [];
 
     constructor(private dataService: WebsocketService) {
@@ -29,20 +40,23 @@ export class ChatComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.messageSubscription = this.dataService.getMessages()
             .subscribe(
-                m => this.messages.push(m.message)
+                m => {
+                    if (this.messagesForm.value) {
+                        this.messagesForm.reset();
+                    }
+                    this.messages.push(m.message);
+                }
             );
     }
 
     keyDownEnter(event) {
         if (event.keyCode === 13) {
-            this.dataService.sendMessage(this.message);
-            this.message.reset();
+            this.sendMessage();
         }
     }
 
     sendMessage(): void {
-        this.dataService.sendMessage(this.message);
-        this.message.reset();
+        this.dataService.sendMessage(this.messagesForm.value.message);
     }
 
     ngOnDestroy() {

@@ -30,8 +30,8 @@ export class WebsocketService {
         return observable;
     }
 
-    sendMessage(m: FormControl): void {
-        this.socket.emit('message', m.value);
+    sendMessage(m: FormControl): Observable<FormControl> {
+        this.socket.emit('message', m);
     }
 
     getMessages(): Observable<any> {
