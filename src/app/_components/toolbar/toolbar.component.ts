@@ -24,6 +24,7 @@ import { WebsocketService } from "../../_services/websocket.service";
                              [cpPosition]="'bottom'"
                              [(colorPicker)]="color.color"
                              [style.background]="color.color"/>
+                      {{swatches.value | json}}
                   </section>
               </form>
           </mat-expansion-panel>
@@ -46,16 +47,16 @@ export class ToolbarComponent implements OnInit {
         c: new FormControl(),
         d: new FormControl()
     });
-    onColorChange(): void {
-        this.swatches.valueChanges.subscribe(
-            val => {
-                this.webSocket.colorChange(this.swatches.a.value)
-            }
-        );
-    }
+    // onColorChange(): void {
+    //     this.swatches.valueChanges.subscribe(
+    //         val => {
+    //             this.webSocket.colorChange(this.swatches.a.value)
+    //         }
+    //     );
+    // }
 
   ngOnInit() {
-      this.onColorChange();
+      // this.onColorChange();
   }
 
 }
