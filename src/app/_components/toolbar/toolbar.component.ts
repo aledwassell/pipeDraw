@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl} from "@angular/forms"
-import {Observable } from "rxjs/index"
-import { FormControl } from "@angular/forms"
+import { FormGroup, FormControl} from "@angular/forms";
+import {Observable } from "rxjs/index";
 import { WebsocketService } from "../../_services/websocket.service";
 
 @Component({
@@ -23,10 +22,14 @@ import { WebsocketService } from "../../_services/websocket.service";
                              class="swatch"
                              [cpPosition]="'bottom'"
                              [(colorPicker)]="color.color"
+                             (colorPickerChange)="onColorChange($event)"
                              [style.background]="color.color"/>
-                      {{swatches.value | json}}
+                      <mat-divider *ngIf="arrayColors.length > 1"></mat-divider>
                   </section>
+                  
               </form>
+              <button (click)="addColor()">plus</button>
+              <button (click)="colorGen()">rand</button>
           </mat-expansion-panel>
       </mat-accordion>
       <app-chat></app-chat>
@@ -47,16 +50,21 @@ export class ToolbarComponent implements OnInit {
         c: new FormControl(),
         d: new FormControl()
     });
-    // onColorChange(): void {
-    //     this.swatches.valueChanges.subscribe(
-    //         val => {
-    //             this.webSocket.colorChange(this.swatches.a.value)
-    //         }
-    //     );
-    // }
+    addColor(): void {
+        this.arrayColors.push({color: '#222222'})
+    }
+    onColorChange(e): void {
+        this.webSocket.colorChange(e);
+    }
+
+    colorGen() {
+        let hex = '0123456789abcdef';
+        let r = hex[Math.floor(Math.random() * (16 - 0) + 0)];
+        console.log(`#${r}${r}${r}${r}${r}${r}`);
+        // return `#${}${}${}${}${}${}`;
+    }
 
   ngOnInit() {
-      // this.onColorChange();
   }
 
 }

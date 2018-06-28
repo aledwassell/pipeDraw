@@ -31,13 +31,13 @@ export class WebsocketService {
     }
 
     sendMessage(m: FormControl): Observable<FormControl> {
-        this.socket.emit('message', m);
+        return this.socket.emit('message', m);
     }
 
     colorChange(c: string): void {
         this.socket.emit("color", c);
     }
-    getColor(): Observable<string> {
+    getColor(): Observable<object> {
         let observable = new Observable(observer => {
             this.socket = io(this.url);
             this.socket.on('color', data => {

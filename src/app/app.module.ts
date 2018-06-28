@@ -20,9 +20,8 @@ import {
     MatSelectModule,
     MatIconModule,
     MatSnackBarModule,
-    MatSnackBarModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule, MatDividerModule
 } from '@angular/material';
 
 @NgModule({
@@ -52,6 +51,7 @@ import {
         MatIconModule,
         MatSnackBarModule,
         MatExpansionModule,
+        MatDividerModule,
         ColorPickerModule
     ],
     providers: [
