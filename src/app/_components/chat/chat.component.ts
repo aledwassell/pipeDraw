@@ -6,26 +6,17 @@ import {Subscription} from "rxjs/index";
 @Component({
     selector: 'app-chat',
     template: `
-        <form [formGroup]="messagesForm" (keydown)="keyDownEnter($event)">
-            <section>
-                <mat-form-field>
-                    <input matInput required formControlName="message" placeholder="Your name">
-                </mat-form-field>
-                <button [disabled]="messagesForm.invalid" mat-raised-button (click)="sendMessage()">send</button>
-            </section>
-            <section>
-                <mat-form-field>
-                    <input matInput required formControlName="message" placeholder="Chat">
-                </mat-form-field>
-                <button [disabled]="messagesForm.invalid" mat-raised-button (click)="sendMessage()">send</button>
-            </section>
-            
+        <form class="form" [formGroup]="messagesForm" (keydown)="keyDownEnter($event)">
+            <mat-form-field class="input-width">
+                <input matInput formControlName="message" placeholder="Chat">
+                <mat-icon (click)="sendMessage()" matSuffix>send</mat-icon>
+            </mat-form-field>
         </form>
-        <ul *ngIf="messages">
-            <li *ngFor="let m of messages">{{m}}</li>
-        </ul>
+        <div class="message-box" *ngIf="messages.length > 0">
+            <p *ngFor="let m of messages">{{m}}</p>
+        </div>
     `,
-    styleUrls: ['./chat.component.css']
+    styleUrls: ['./chat.component.sass']
 })
 export class ChatComponent implements OnInit, OnDestroy {
     messageSubscription: Subscription;

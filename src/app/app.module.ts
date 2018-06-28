@@ -9,15 +9,20 @@ import { ChatComponent } from './_components/chat/chat.component';
 import { CanvasComponent } from './_components/canvas/canvas.component';
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ColorPickerModule } from 'ngx-color-picker';
-import { ColorSketchModule } from "ngx-color/sketch";
-import { ColorSwatchesModule } from 'ngx-color/swatches';
 import {
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSidenavModule, MatOptionModule, MatSelectModule, MatIconModule, MatSnackBarModule, MatSnackBarModule
+    MatSidenavModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatExpansionModule
 } from '@angular/material';
 
 @NgModule({
@@ -43,11 +48,11 @@ import {
         MatSidenavModule,
         MatOptionModule,
         MatSelectModule,
+        MatCardModule,
         MatIconModule,
         MatSnackBarModule,
-        ColorPickerModule,
-        ColorSketchModule,
-        ColorSwatchesModule
+        MatExpansionModule,
+        ColorPickerModule
     ],
     providers: [
     ],

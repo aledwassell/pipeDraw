@@ -21,6 +21,11 @@ io.on('connection', socket => {
         io.emit('message', {message: m})
     });
 
+    socket.on('color', (c) => {
+        console.log(`colorfrom client "${c}"`);
+        io.emit('color', {color: c})
+    });
+
     socket.on('disconnect', () => {
         sockets.delete(socket);
         console.log('disconnected');

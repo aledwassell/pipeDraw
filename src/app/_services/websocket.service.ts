@@ -34,6 +34,20 @@ export class WebsocketService {
         this.socket.emit('message', m);
     }
 
+    colorChange(c: string): void {
+        this.socket.emit("color", c);
+    }
+    getColor(): Observable<string> {
+        let observable = new Observable(observer => {
+            this.socket = io(this.url);
+            this.socket.on('color', data => {
+                observer.next(data);
+            });
+            return;
+        });
+        return observable;
+    }
+
     getMessages(): Observable<any> {
         let observable = new Observable(observer => {
             this.socket = io(this.url);
