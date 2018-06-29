@@ -20,7 +20,6 @@ export class CanvasComponent implements OnInit {
   drawObservable = new Observable<Sketch>((obs) => {
       this.p5.mouseDragged = () => {
           this.p5.fill(this.color.color);
-          // this.p5.fill(this.colorGen.randColor);
           this.p5.noStroke();
           this.p5.ellipse(this.p5.mouseX, this.p5.mouseY, 10, 10);
           obs.next({x: this.p5.mouseX, y: this.p5.mouseY});
@@ -49,7 +48,7 @@ export class CanvasComponent implements OnInit {
         this.webSocket.getColor()
             .subscribe(
                 c => this.color = c
-            )
+            );
     }
 
     private createCanvas() {
