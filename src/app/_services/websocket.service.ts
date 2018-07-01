@@ -1,6 +1,7 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, observable, Observer, Subject} from "rxjs";
-import { Sketch } from "../_interfaces/sketch"
+import { Sketch } from "../_interfaces/sketch";
+import { Color } from "../_interfaces/color"
 import * as io from 'socket.io-client';
 import { FormControl } from "@angular/forms"
 import {Socket} from "../_interfaces/socket";
@@ -34,11 +35,11 @@ export class WebsocketService {
         return this.socket.emit('message', m);
     }
 
-    colorChange(c: string): void {
+    colorChange(c: Color): void {
         this.socket.emit("color", c);
     }
-    getColor(): Observable<object> {
-        let observable = new Observable(observer => {
+    getColor(): Observable<Color> {
+        let observable = new Observable<Color>(observer => {
             this.socket = io(this.url);
             this.socket.on('color', data => {
                 observer.next(data);

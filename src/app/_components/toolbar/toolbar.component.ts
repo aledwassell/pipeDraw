@@ -53,18 +53,29 @@ import {WebsocketService} from "../../_services/websocket.service";
                 </form>
             </mat-expansion-panel>
         </mat-accordion>
+        <mat-card>
+            <section>
+                <div [ngStyle]="{'width.px': brushSize, 'height.px': brushSize}">
+                    <p>
+                        {{brushSize}}px
+                    </p>
+                </div>
+                <mat-slider [(ngModel)]="brushSize"></mat-slider>    
+            </section>
+            
+        </mat-card>
         <app-chat></app-chat>
     `,
     styleUrls: ['./toolbar.component.sass']
 })
 export class ToolbarComponent implements OnInit {
-
+    brushSize: any = 20;
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
     }
 
     public arrayColors: any = [
-        {color: this.colorGen.randColor}
+        {color: this.colorGen.randColor, type: 'pen'}
     ];
 
     swatches = new FormGroup({
@@ -73,7 +84,7 @@ export class ToolbarComponent implements OnInit {
     });
 
     addColor(): void {
-        this.arrayColors.push({color: this.colorGen.randColor});
+        this.arrayColors.push({color: this.colorGen.randColor, type: 'pen'});
     }
 
     randomize(indx: number) {

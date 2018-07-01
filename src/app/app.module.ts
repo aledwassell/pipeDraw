@@ -21,7 +21,7 @@ import {
     MatIconModule,
     MatSnackBarModule,
     MatCardModule,
-    MatExpansionModule, MatDividerModule
+    MatExpansionModule, MatDividerModule, MatSliderModule
 } from '@angular/material';
 
 @NgModule({
@@ -38,6 +38,7 @@ import {
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+
         LayoutModule,
         MatButtonModule,
         MatCheckboxModule,
@@ -52,6 +53,7 @@ import {
         MatSnackBarModule,
         MatExpansionModule,
         MatDividerModule,
+        MatSliderModule,
         ColorPickerModule
     ],
     providers: [
