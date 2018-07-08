@@ -31,7 +31,6 @@ export class CanvasComponent implements OnInit {
   constructor(
       private webSocket: WebsocketService
   ) { }
-
     ngOnInit() {
         this.createCanvas();
         this.sub = this.webSocket.getDrawData()

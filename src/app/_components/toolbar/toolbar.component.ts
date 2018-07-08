@@ -35,7 +35,10 @@ import {WebsocketService} from "../../_services/websocket.service";
                     <section>
                         Pen colors
                         <button mat-icon-button (click)="addColor()" [disabled]="arrayColors.length >= 4">
-                            <mat-icon aria-label="Add color">add</mat-icon>
+                            <mat-icon aria-label="Add color">add_circle</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="removeColor()" *ngIf="arrayColors.length >= 2">
+                            <mat-icon aria-label="Remove color">remove_circle</mat-icon>
                         </button>
                     </section>
                     <section *ngFor="let color of arrayColors; index as i">
@@ -60,9 +63,8 @@ import {WebsocketService} from "../../_services/websocket.service";
                         {{brushSize}}px
                     </p>
                 </div>
-                <mat-slider [(ngModel)]="brushSize"></mat-slider>    
+                <mat-slider [(ngModel)]="brushSize" (input)="brushSizeChange($event)"></mat-slider>    
             </section>
-            
         </mat-card>
         <app-chat></app-chat>
     `,
@@ -87,12 +89,24 @@ export class ToolbarComponent implements OnInit {
         this.arrayColors.push({color: this.colorGen.randColor, type: 'pen'});
     }
 
+    removeColor(): void {
+        this.arrayColors.pop();
+    }
+
     randomize(indx: number) {
         this.arrayColors[indx].color = this.colorGen.randColor;
     }
 
     onColorChange(e): void {
         this.webSocket.colorChange(e);
+    }
+
+    brushSizeChange(evt): void {
+        this.brushSize = evt.value;
+        console.log(evt);
+        this.webSocket.brushSizeChange(evt).subscribe(
+            e => console.log(e)
+        )
     }
 
     ngOnInit() {

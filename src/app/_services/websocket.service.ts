@@ -5,6 +5,7 @@ import { Color } from "../_interfaces/color"
 import * as io from 'socket.io-client';
 import { FormControl } from "@angular/forms"
 import {Socket} from "../_interfaces/socket";
+import { BrushSize } from "../_interfaces/brushSize"
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,11 @@ export class WebsocketService {
     colorChange(c: Color): void {
         this.socket.emit("color", c);
     }
+
+    brushSizeChange(d: BrushSize): void {
+        this.socket.emit('brushSize', d);
+    }
+
     getColor(): Observable<Color> {
         let observable = new Observable<Color>(observer => {
             this.socket = io(this.url);
