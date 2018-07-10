@@ -26,6 +26,11 @@ io.on('connection', socket => {
         io.emit('color', {color: c})
     });
 
+    socket.on('brushSize', (d) => {
+        console.log(`size from client "${d}"`);
+        io.emit('brushSize', d)
+    });
+
     socket.on('disconnect', () => {
         sockets.delete(socket);
         console.log('disconnected');

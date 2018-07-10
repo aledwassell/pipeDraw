@@ -104,9 +104,7 @@ export class ToolbarComponent implements OnInit {
     brushSizeChange(evt): void {
         this.brushSize = evt.value;
         console.log(evt);
-        this.webSocket.brushSizeChange(evt).subscribe(
-            e => console.log(e)
-        )
+        this.webSocket.brushSizeChange(evt);
     }
 
     ngOnInit() {

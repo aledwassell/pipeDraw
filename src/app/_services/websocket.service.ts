@@ -41,6 +41,7 @@ export class WebsocketService {
     }
 
     brushSizeChange(d: BrushSize): void {
+        console.log(d);
         this.socket.emit('brushSize', d);
     }
 
