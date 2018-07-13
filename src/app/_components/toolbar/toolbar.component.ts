@@ -103,7 +103,6 @@ export class ToolbarComponent implements OnInit {
 
     brushSizeChange(evt): void {
         this.brushSize = evt.value;
-        console.log(evt);
         this.webSocket.brushSizeChange(evt);
     }
 
