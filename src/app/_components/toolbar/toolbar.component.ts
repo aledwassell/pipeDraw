@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl} from "@angular/forms";
 import {ColorGenService} from "../../_services/color-gen.service";
 import {WebsocketService} from "../../_services/websocket.service";
+import {Color} from "../../_interfaces/color";
 
 @Component({
     selector: 'app-toolbar',
@@ -26,9 +27,9 @@ import {WebsocketService} from "../../_services/websocket.service";
                                    class="swatch"
                                    [cpPosition]="'bottom'"
                                    [(colorPicker)]="color"
-                                   (colorPickerChange)="onColorChange($event)"
+                                   (colorPickerChange)="onColorChange({color: $event, type: 'background'})"
                                    [style.background]="color"/>
-                            <button mat-button>Randomize</button>
+                            <button mat-button (click)="randomize(i, 'background')">Randomize</button>
                         </div>
                         <mat-divider></mat-divider>
                     </section>
@@ -47,9 +48,10 @@ import {WebsocketService} from "../../_services/websocket.service";
                                    class="swatch"
                                    [cpPosition]="'bottom'"
                                    [(colorPicker)]="color.color"
-                                   (colorPickerChange)="onColorChange($event)"
+                                   (colorPickerChange)="onColorChange({color: $event, type: 'pen'})"
                                    [style.background]="color.color"/>
-                            <button mat-button (click)="randomize(i)">Randomize</button>
+                            <button mat-button (click)="randomize(i, 'pen')">Randomize</button>
+                            <button mat-button (click)="rainbowize()">Rainbowize</button>
                         </div>
                         <mat-divider *ngIf="arrayColors.length > 1"></mat-divider>
                     </section>
@@ -57,13 +59,16 @@ import {WebsocketService} from "../../_services/websocket.service";
             </mat-expansion-panel>
         </mat-accordion>
         <mat-card>
-            <section>
-                <div [ngStyle]="{'width.px': brushSize, 'height.px': brushSize}">
-                    <p>
+            <section style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; height: 100px;">
+                <mat-slider (input)="brushSizeChange($event)" [(ngModel)]="brushSize"></mat-slider>
+                <p *ngIf="brushSize < 40">
+                    {{brushSize}}px
+                </p>
+                <div [ngStyle]="{'width.px': brushSize, 'height.px': brushSize, 'background-color': '#333333'}">
+                    <p *ngIf="brushSize > 40">
                         {{brushSize}}px
                     </p>
                 </div>
-                <mat-slider [(ngModel)]="brushSize" (input)="brushSizeChange($event)"></mat-slider>    
             </section>
         </mat-card>
         <app-chat></app-chat>
@@ -71,7 +76,7 @@ import {WebsocketService} from "../../_services/websocket.service";
     styleUrls: ['./toolbar.component.sass']
 })
 export class ToolbarComponent implements OnInit {
-    brushSize: any = 20;
+    brushSize: number = 20;
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
     }
@@ -93,20 +98,30 @@ export class ToolbarComponent implements OnInit {
         this.arrayColors.pop();
     }
 
-    randomize(indx: number) {
-        this.arrayColors[indx].color = this.colorGen.randColor;
+    randomize(indx: number, type: string) {
+        const color = this.colorGen.randColor;
+        this.arrayColors[indx].color = color;
+        this.onColorChange({color: color, type: type});
     }
 
-    onColorChange(e): void {
-        this.webSocket.colorChange(e);
+    rainbowize(): void {
+        this.webSocket.rainbowize();
+    }
+
+    onColorChange(e: Color): void {
+        console.log(e);
+        this.webSocket.emitColorChange(e);
     }
 
     brushSizeChange(evt): void {
         this.brushSize = evt.value;
-        this.webSocket.brushSizeChange(evt);
+        this.webSocket.emitBrushSizeChange(evt.value);
     }
 
     ngOnInit() {
+        this.webSocket.getBrushSize().subscribe(
+            s => console.log(s)
+        );
     }
 
 }

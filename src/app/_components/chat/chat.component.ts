@@ -47,7 +47,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     sendMessage(): void {
-        this.dataService.sendMessage(this.messagesForm.value.message);
+        this.dataService.emitMessage(this.messagesForm.value.message);
     }
 
     ngOnDestroy() {

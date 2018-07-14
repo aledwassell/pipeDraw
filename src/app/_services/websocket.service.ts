@@ -5,7 +5,7 @@ import { Color } from "../_interfaces/color"
 import * as io from 'socket.io-client';
 import { FormControl } from "@angular/forms"
 import {Socket} from "../_interfaces/socket";
-import { BrushSize } from "../_interfaces/brushSize"
+import {ColorGenService} from "./color-gen.service"
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +16,22 @@ export class WebsocketService {
     private drawObserver: Observer<any>;
     private socket: Socket;
     private observer: Observer<any>;
+    private _rainbowize: boolean = false;
 
-    sendDrawData(d: Sketch): void {
+    constructor(private colorGen: ColorGenService){
+
+    }
+
+    rainbowize () {
+        this._rainbowize = !this._rainbowize;
+        console.log(this._rainbowize);
+    }
+
+    emitDrawData(d: Sketch): void {
+        if (this._rainbowize) {
+            d.color = this.colorGen.randColor;
+        }
+        console.log(this._rainbowize);
         this.socket.emit('data', d);
     }
 
@@ -32,20 +46,19 @@ export class WebsocketService {
         return observable;
     }
 
-    sendMessage(m: FormControl): Observable<FormControl> {
+    emitMessage(m: FormControl): Observable<FormControl> {
         return this.socket.emit('message', m);
     }
 
-    colorChange(c: Color): void {
-        this.socket.emit("color", c);
+    emitColorChange(c: Color): void {
+        this.socket.emit('color', c);
     }
 
-    brushSizeChange(d: BrushSize): void {
-        console.log(d);
+    emitBrushSizeChange(d: number): void {
         this.socket.emit('brushSize', d);
     }
-    getBrushSize(): Observable<Color> {
-        let observable = new Observable<Color>(observer => {
+    getBrushSize(): Observable<number> {
+        let observable = new Observable<number>(observer => {
             this.socket = io(this.url);
             this.socket.on('brushSize', data => {
                 observer.next(data);

@@ -16,21 +16,22 @@ import * as P5 from 'p5';
 export class CanvasComponent implements OnInit {
   sub: Subscription;
   data: Sketch;
-  color: Color = {color: '#333333', type: 'pen'};
+  color: Color = {color: this.colorGen.randColor, type: 'pen'};
   background: Color = {color: '#ffffff', type: 'canvas'};
-  BrushSize: number;
+  BrushSize: number = 20;
   p5: any;
   drawObservable = new Observable<Sketch>((obs) => {
       this.p5.mouseDragged = () => {
           this.p5.fill(this.color.color);
           this.p5.noStroke();
-          this.p5.ellipse(this.p5.mouseX, this.p5.mouseY, 20, 20);
+          this.p5.ellipse(this.p5.mouseX, this.p5.mouseY, this.BrushSize, this.BrushSize);
           obs.next({x: this.p5.mouseX, y: this.p5.mouseY});
       };
       obs.complete();
   });
   constructor(
-      private webSocket: WebsocketService
+      private webSocket: WebsocketService,
+      private colorGen: ColorGenService
   ) { }
     ngOnInit() {
         this.createCanvas();
@@ -38,17 +39,19 @@ export class CanvasComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
+                    console.log(data);
                     this.draw(data);
                 }
             );
         this.drawObservable.subscribe(
             (e) => {
-                this.webSocket.sendDrawData(e);
+                this.webSocket.emitDrawData(e);
             }
         );
         this.webSocket.getColor()
             .subscribe(
                 c => {
+                    console.log(c)
                     if (c.type === 'pen') {
                         this.color = c;
                     } else if (c.type === 'canvas') {
@@ -58,6 +61,7 @@ export class CanvasComponent implements OnInit {
             );
         this.webSocket.getBrushSize().subscribe(
             s => {
+                console.log(s)
                 this.BrushSize = s;
             }
         );
@@ -79,10 +83,11 @@ export class CanvasComponent implements OnInit {
 
     private draw(data: Sketch) {
       console.log(data)
+        console.log(this.color);
       this.p5.draw = () => {
-          this.p5.fill(0);
+          this.p5.fill(this.color);
           this.p5.noStroke();
-          this.p5.ellipse(data.x, data.y, 10, 10);
+          this.p5.ellipse(data.x, data.y, this.BrushSize, this.BrushSize);
       };
     }
 }

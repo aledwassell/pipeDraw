@@ -7,7 +7,7 @@ export class ColorGenService implements OnInit {
     get randColor() {
         return this.colorGen();
     }
-    colorGen() {
+    private colorGen() {
         let hex = '0123456789abcdef',
             col = '#';
         for (let i = 0; i < 6; i++) {

@@ -23,7 +23,7 @@ io.on('connection', socket => {
 
     socket.on('color', (c) => {
         console.log(`colorfrom client "${c}"`);
-        io.emit('color', {color: c})
+        io.emit('color', c)
     });
 
     socket.on('brushSize', (d) => {
