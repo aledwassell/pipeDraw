@@ -44,7 +44,16 @@ export class WebsocketService {
         console.log(d);
         this.socket.emit('brushSize', d);
     }
-
+    getBrushSize(): Observable<Color> {
+        let observable = new Observable<Color>(observer => {
+            this.socket = io(this.url);
+            this.socket.on('brushSize', data => {
+                observer.next(data);
+            });
+            return;
+        });
+        return observable;
+    }
     getColor(): Observable<Color> {
         let observable = new Observable<Color>(observer => {
             this.socket = io(this.url);

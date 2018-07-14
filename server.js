@@ -11,14 +11,14 @@ io.on('connection', socket => {
     sockets.add(socket);
     console.log(`socket id:${socket.id} added`);
 
-    socket.on('data', (d) => {
-        console.log(`data from client ${d.x} ${d.y}`);
-        io.emit('data', d)
-    });
-
     socket.on('message', (m) => {
         console.log(`message from client "${m}"`);
         io.emit('message', {message: m})
+    });
+
+    socket.on('data', (d) => {
+        console.log(`data from client ${d.x} ${d.y}`);
+        io.emit('data', d)
     });
 
     socket.on('color', (c) => {
@@ -35,7 +35,6 @@ io.on('connection', socket => {
         sockets.delete(socket);
         console.log('disconnected');
     });
-
 
 });
 

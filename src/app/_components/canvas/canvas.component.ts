@@ -17,13 +17,14 @@ export class CanvasComponent implements OnInit {
   sub: Subscription;
   data: Sketch;
   color: Color = {color: '#333333', type: 'pen'};
-  background: Color = {color: '#ffffff', type: 'canvas'}
+  background: Color = {color: '#ffffff', type: 'canvas'};
+  BrushSize: number;
   p5: any;
   drawObservable = new Observable<Sketch>((obs) => {
       this.p5.mouseDragged = () => {
           this.p5.fill(this.color.color);
           this.p5.noStroke();
-          this.p5.ellipse(this.p5.mouseX, this.p5.mouseY, 10, 10);
+          this.p5.ellipse(this.p5.mouseX, this.p5.mouseY, 20, 20);
           obs.next({x: this.p5.mouseX, y: this.p5.mouseY});
       };
       obs.complete();
@@ -55,6 +56,11 @@ export class CanvasComponent implements OnInit {
                     }
                 }
             );
+        this.webSocket.getBrushSize().subscribe(
+            s => {
+                this.BrushSize = s;
+            }
+        );
     }
 
     private createCanvas() {
