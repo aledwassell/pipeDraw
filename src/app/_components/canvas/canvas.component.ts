@@ -3,7 +3,7 @@ import {WebsocketService} from "../../_services/websocket.service";
 import {ColorGenService} from "../../_services/color-gen.service"
 import {Sketch} from "../../_interfaces/sketch";
 import {Color} from "../../_interfaces/color"
-import {Observable, Subscription} from "rxjs/index"
+import {Observable, Subscription} from "rxjs/index";
 import * as P5 from 'p5';
 
 @Component({
@@ -19,9 +19,10 @@ export class CanvasComponent implements OnInit {
     color: Color = {color: this.colorGen.randColor, type: 'pen'};
     background: Color = {color: '#ffffff', type: 'canvas'};
     BrushSize: number = 20;
-    p5: any;
+    private p5;
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
+
     }
     ngOnInit() {
         this.createCanvas();
@@ -49,7 +50,6 @@ export class CanvasComponent implements OnInit {
             }
         );
     }
-
     private drawFunction = () => {
         this.p5.mouseDragged = () => {
             this.p5.fill(this.color.color);
@@ -58,7 +58,6 @@ export class CanvasComponent implements OnInit {
             this.webSocket.emitDrawData({x: this.p5.mouseX, y: this.p5.mouseY});
         };
     }
-
     private createCanvas() {
         this.p5 = new P5(this.sketch);
     }
