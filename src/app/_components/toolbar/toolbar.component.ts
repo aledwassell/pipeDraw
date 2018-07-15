@@ -62,11 +62,11 @@ import {Color} from "../../_interfaces/color";
             <section style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; height: 100px;">
                 <mat-slider (input)="brushSizeChange($event)" [(ngModel)]="brushSize"></mat-slider>
                 <p *ngIf="brushSize < 40">
-                    {{brushSize}}px
+                    <input [(ngModel)]="brushSize" style="border: none; text-align: right; width: 20px; font-size: 16px;">px
                 </p>
                 <div [ngStyle]="{'width.px': brushSize, 'height.px': brushSize, 'background-color': '#333333'}">
                     <p *ngIf="brushSize > 40">
-                        {{brushSize}}px
+                        <input [(ngModel)]="brushSize" style="border: none; text-align: right; width: 20px; font-size: 16px; background-color: #333333; color: #ffffff">px
                     </p>
                 </div>
             </section>
@@ -109,7 +109,6 @@ export class ToolbarComponent implements OnInit {
     }
 
     onColorChange(e: Color): void {
-        console.log(e);
         this.webSocket.emitColorChange(e);
     }
 
@@ -120,7 +119,7 @@ export class ToolbarComponent implements OnInit {
 
     ngOnInit() {
         this.webSocket.getBrushSize().subscribe(
-            s => console.log(s)
+            s => this.brushSize = s
         );
     }
 

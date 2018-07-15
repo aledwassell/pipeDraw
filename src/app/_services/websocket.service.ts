@@ -28,10 +28,7 @@ export class WebsocketService {
     }
 
     emitDrawData(d: Sketch): void {
-        if (this._rainbowize) {
-            d.color = this.colorGen.randColor;
-        }
-        console.log(this._rainbowize);
+        console.log(d)
         this.socket.emit('data', d);
     }
 
