@@ -22,7 +22,6 @@ export class CanvasComponent implements OnInit {
     private p5;
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
-
     }
     ngOnInit() {
         this.createCanvas();
