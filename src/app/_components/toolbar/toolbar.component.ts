@@ -76,32 +76,28 @@ import {Color} from "../../_interfaces/color";
     styleUrls: ['./toolbar.component.sass']
 })
 export class ToolbarComponent implements OnInit {
-    brushSize: number = 20;
+    brushSize: number;
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
+        this.brushSize = 20;
     }
-
     public arrayColors: any = [
-        {color: this.colorGen.randColor, type: 'pen'}
+        {hex: this.colorGen.randColor, type: 'pen'}
     ];
-
     swatches = new FormGroup({
         bkg: new FormControl(),
         c: new FormControl()
     });
-
     addColor(): void {
-        this.arrayColors.push({color: this.colorGen.randColor, type: 'pen'});
+        this.arrayColors.push({hex: this.colorGen.randColor, type: 'pen'});
     }
-
     removeColor(): void {
         this.arrayColors.pop();
     }
-
     randomize(indx: number, type: string) {
         const color = this.colorGen.randColor;
-        this.arrayColors[indx].color = color;
-        this.onColorChange({color: color, type: type});
+        this.arrayColors[indx].hex = color;
+        this.onColorChange({hex: color, type: type});
     }
 
     rainbowize(): void {
