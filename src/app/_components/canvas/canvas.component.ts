@@ -4,7 +4,7 @@ import {ColorGenService} from "../../_services/color-gen.service"
 import {Sketch} from "../../_interfaces/sketch";
 import {Color} from "../../_interfaces/color"
 import { Subscription} from "rxjs/index";
-import * as P5 from 'p5';
+import * as P5 from "p5";
 
 @Component({
     selector: 'app-canvas',
