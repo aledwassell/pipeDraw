@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {WebsocketService} from "../../_services/websocket.service";
-import {ColorGenService} from "../../_services/color-gen.service"
-import {Sketch} from "../../_interfaces/sketch";
-import {Color} from "../../_interfaces/color"
-import { Subscription} from "rxjs/index";
+import {WebsocketService} from '../../_services/websocket.service';
+import {ColorGenService} from '../../_services/color-gen.service';
+import {Sketch} from '../../_interfaces/sketch';
+import {Color} from '../../_interfaces/color';
+import { Subscription} from 'rxjs/index';
 import * as P5 from "p5";
 
 @Component({
@@ -37,7 +37,7 @@ export class CanvasComponent implements OnInit {
         this.webSocket.getColor()
             .subscribe(
                 c => {
-                    console.log(c)
+                    console.log(c);
                     if (c.type === 'pen') {
                         this.color = c;
                     } else if (c.type === 'canvas') {
