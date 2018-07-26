@@ -8,11 +8,12 @@ import {Subscription} from "rxjs/index";
     template: `
         <form class="form" [formGroup]="messagesForm" (keydown)="keyDownEnter($event)">
             <mat-form-field class="input-width">
-                <input matInput formControlName="message" placeholder="Chat">
-                <mat-icon (click)="sendMessage()" matSuffix>send</mat-icon>
+                <input matInput formControlName="message" placeholder="Chat" required>
+                <mat-icon (click)="sendMessage()" *ngIf="messagesForm.controls.message.valid" matSuffix>send</mat-icon>
+                <mat-error *ngIf="messagesForm.controls.message.invalid">Must contain a message!</mat-error>
             </mat-form-field>
         </form>
-        <div class="message-box" *ngIf="messages.length > 0">
+        <div class="message-box" *ngIf="messages && messages.length > 0">
             <p *ngFor="let m of messages">{{m}}</p>
         </div>
     `,
