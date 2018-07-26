@@ -14,7 +14,6 @@ import {Color} from "../../_interfaces/color";
                         Colours
                     </mat-panel-title>
                     <mat-panel-description>
-
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form [formGroup]="swatches">
