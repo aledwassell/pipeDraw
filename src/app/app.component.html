@@ -3,7 +3,8 @@
         <app-toolbar></app-toolbar>
     </mat-sidenav>
     <mat-sidenav-content>
-        <button mat-fab (click)="sidenav.toggle()">
+        <button mat-fab
+                (click)="sidenav.toggle()">
             <mat-icon *ngIf="!sidenav.opened">arrow_back</mat-icon>
             <mat-icon *ngIf="sidenav.opened">arrow_forward</mat-icon>
         </button>

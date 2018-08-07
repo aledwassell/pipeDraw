@@ -71,7 +71,6 @@ export class CanvasComponent implements OnInit {
             p.resizeCanvas(p.windowWidth, p.windowHeight);
         };
     }
-
     private draw(data: Sketch) {
         this.p5.draw = () => {
             this.p5.fill(this.color.hex);

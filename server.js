@@ -22,7 +22,7 @@ io.on('connection', socket => {
     });
 
     socket.on('color', (c) => {
-        console.log(`colorfrom client "${c}"`);
+        console.log(`colorfrom client "${c.hex}" "${c.type}"`);
         io.emit('color', c)
     });
 

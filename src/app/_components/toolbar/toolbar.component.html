@@ -1,0 +1,73 @@
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Colours
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <form [formGroup]="swatches">
+            <!--<section>-->
+                <!--Background colors-->
+            <!--</section>-->
+            <!--<section>-->
+                <!--<div class="background-container">-->
+                    <!--<input formControlName="bkg"-->
+                           <!--class="swatch"-->
+                           <!--[cpPosition]="'bottom'"-->
+                           <!--[(colorPicker)]="backgroundColor.hex"-->
+                           <!--(colorPickerChange)="onColorChange({hex: $event, type: 'background'})"-->
+                           <!--[style.background]="backgroundColor.hex"/>-->
+                    <!--<div class="button-row">-->
+                        <!--<button mat-button (click)="randomize(i, 'background')">Randomize</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<mat-divider></mat-divider>-->
+            <!--</section>-->
+            <section>
+                Pen colors
+                <button mat-icon-button (click)="addColor()" [disabled]="arrayColors.length >= 4">
+                    <mat-icon aria-label="Add color">add_circle</mat-icon>
+                </button>
+                <button mat-icon-button (click)="removeColor()" *ngIf="arrayColors.length >= 2">
+                    <mat-icon aria-label="Remove color">remove_circle</mat-icon>
+                </button>
+            </section>
+            <section *ngFor="let color of arrayColors; index as i">
+                <div class="color-container">
+                    <input formControlName="c"
+                           class="swatch"
+                           [cpPosition]="'bottom'"
+                           [(colorPicker)]="color.hex"
+                           (colorPickerChange)="onColorChange({hex: $event, type: 'pen'})"
+                           [style.background]="color.hex"/>
+                    <div class="button-row">
+                        <button mat-button (click)="randomize(i, 'pen')">Randomize</button>
+                        <!--<button mat-button (click)="rainbowize()">Rainbowize</button>-->
+                    </div>
+                </div>
+                <mat-divider *ngIf="arrayColors.length > 1"></mat-divider>
+            </section>
+        </form>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Brush settings
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; height: 100px;">
+            <mat-slider (input)="brushSizeChange($event)" [(ngModel)]="brushSize"></mat-slider>
+            <p *ngIf="brushSize < 40">
+                <input [(ngModel)]="brushSize" style="border: none; text-align: right; width: 20px; font-size: 16px;">px
+            </p>
+            <div class="brushNode" [ngStyle]="{'width.px': brushSize, 'height.px': brushSize, 'background-color': '#333333'}">
+                <p *ngIf="brushSize > 40">
+                    <input [(ngModel)]="brushSize" style="border: none; text-align: right; width: 20px; font-size: 16px; background-color: #333333; color: #ffffff">px
+                </p>
+            </div>
+        </section>
+    </mat-expansion-panel>
+</mat-accordion>
+<app-chat></app-chat>
