@@ -34,6 +34,7 @@ export class CanvasComponent implements OnInit {
                     this.draw(data);
                 }
             );
+        this.webSocket.get
         this.webSocket.getColor()
             .subscribe(
                 c => {

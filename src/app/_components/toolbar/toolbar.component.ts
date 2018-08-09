@@ -12,6 +12,9 @@ import {Color} from "../../_interfaces/color";
 export class ToolbarComponent implements OnInit {
     private brushSize: number;
     public backgroundColor: Color;
+    public arrayColors: any = [
+        {hex: this.colorGen.randColor, type: 'pen'}
+    ];
     private swatches = new FormGroup({
         bkg: new FormControl(),
         c: new FormControl()
@@ -19,11 +22,13 @@ export class ToolbarComponent implements OnInit {
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
         this.brushSize = 20;
+    }
+    ngOnInit() {
+        this.webSocket.getBrushSize().subscribe(
+            s => this.brushSize = s
+        );
         this.backgroundColor = {hex: this.colorGen.randColor, type: 'pen'};
     }
-    public arrayColors: any = [
-        {hex: this.colorGen.randColor, type: 'pen'}
-    ];
     addColor(): void {
         this.arrayColors.push({hex: this.colorGen.randColor, type: 'pen'});
     }
@@ -54,11 +59,4 @@ export class ToolbarComponent implements OnInit {
         this.brushSize = evt.value;
         this.webSocket.emitBrushSizeChange(evt.value);
     }
-
-    ngOnInit() {
-        this.webSocket.getBrushSize().subscribe(
-            s => this.brushSize = s
-        );
-    }
-
 }

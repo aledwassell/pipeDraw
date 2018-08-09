@@ -24,11 +24,11 @@ export class WebsocketService {
 
     rainbowize () {
         this._rainbowize = !this._rainbowize;
+
         console.log(this._rainbowize);
     }
 
     emitDrawData(d: Sketch): void {
-        console.log(d)
         this.socket.emit('data', d);
     }
 
