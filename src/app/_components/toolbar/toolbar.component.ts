@@ -10,20 +10,20 @@ import {Color} from "../../_interfaces/color";
     styleUrls: ['./toolbar.component.sass']
 })
 export class ToolbarComponent implements OnInit {
-    brushSize: number;
+    private brushSize: number;
     public backgroundColor: Color;
+    private swatches = new FormGroup({
+        bkg: new FormControl(),
+        c: new FormControl()
+    });
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
         this.brushSize = 20;
+        this.backgroundColor = {hex: this.colorGen.randColor, type: 'pen'};
     }
     public arrayColors: any = [
         {hex: this.colorGen.randColor, type: 'pen'}
     ];
-    backgroundColor = {hex: this.colorGen.randColor, type: 'pen'}
-    swatches = new FormGroup({
-        bkg: new FormControl(),
-        c: new FormControl()
-    });
     addColor(): void {
         this.arrayColors.push({hex: this.colorGen.randColor, type: 'pen'});
     }
