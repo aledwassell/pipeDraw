@@ -35,7 +35,6 @@ io.on('connection', socket => {
         sockets.delete(socket);
         console.log('disconnected');
     });
-
 });
 
 http.listen(PORT, () => {
