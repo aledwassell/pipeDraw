@@ -21,7 +21,6 @@ export class WebsocketService {
     constructor(private colorGen: ColorGenService){
 
     }
-
     rainbowize () {
         this._rainbowize = !this._rainbowize;
 
