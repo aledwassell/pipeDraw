@@ -1,11 +1,12 @@
 const app = require('express')(),
+    express = require('express'),
     http = require('http').createServer(app),
     io = require('socket.io')(http),
     PORT = process.env.port || 3200;
 
     let sockets = new Set();
 
-// app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist'));
 
 io.on('connection', socket => {
     sockets.add(socket);
@@ -39,4 +40,4 @@ io.on('connection', socket => {
 
 http.listen(PORT, () => {
     console.log(`listening port: ${PORT}`)
-})
+});

@@ -3,6 +3,27 @@
 <head>
   <meta charset="utf-8">
   <title>DrawApp</title>
+  <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+  <!-- Firebase App is always required and must be first -->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+  <!-- Add additional services that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
+  <script>
+      // Initialize Firebase
+      var config = {
+          apiKey: "AIzaSyBaIGGCeX2E8TZjjAkxGNU5U0jtjRbagWE",
+          authDomain: "draw-chat-11c2f.firebaseapp.com",
+          databaseURL: "https://draw-chat-11c2f.firebaseio.com",
+          projectId: "draw-chat-11c2f",
+          storageBucket: "draw-chat-11c2f.appspot.com",
+          messagingSenderId: "1078613536326"
+      };
+      firebase.initializeApp(config);
+  </script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <base href="/">
   <script>

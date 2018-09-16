@@ -1,4 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
+import {AngularFirestore} from "@angular/fire/firestore";
 import {Observable, observable, Observer, Subject} from "rxjs";
 import { Sketch } from "../_interfaces/sketch";
 import { Color } from "../_interfaces/color"
@@ -11,6 +12,7 @@ import {ColorGenService} from "./color-gen.service"
     providedIn: 'root'
 })
 export class WebsocketService {
+    private items: any;
     private url = 'http://localhost:3200';
     private drawSocket: Socket;
     private drawObserver: Observer<any>;
@@ -18,14 +20,17 @@ export class WebsocketService {
     private observer: Observer<any>;
     private _rainbowize: boolean = false;
 
-    constructor(private colorGen: ColorGenService){
-
+    constructor(
+        private colorGen: ColorGenService,
+        private db: AngularFirestore
+        ) {
+        this.items = db.collection('sketch').valueChanges();
     }
 
     rainbowize () {
         this._rainbowize = !this._rainbowize;
-
         console.log(this._rainbowize);
+        console.log(this.items);
     }
 
     emitDrawData(d: Sketch): void {
