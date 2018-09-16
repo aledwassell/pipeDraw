@@ -9,6 +9,11 @@ import { ChatComponent } from './_components/chat/chat.component';
 import { CanvasComponent } from './_components/canvas/canvas.component';
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ColorPickerModule } from 'ngx-color-picker';
+import {AngularFireModule} from "@angular/fire";
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment} from "../environments/environment";
 import {
     MatButtonModule,
     MatCheckboxModule,
@@ -38,6 +43,10 @@ import {
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        AngularFireStorageModule,
+        AngularFireAuthModule,
         LayoutModule,
         MatButtonModule,
         MatCheckboxModule,
