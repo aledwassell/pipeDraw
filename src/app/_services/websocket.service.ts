@@ -1,5 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFireDatabase, FirebaseObjectObservable} from "@angular/fire/database";
 import {Observable, observable, Observer, Subject} from "rxjs";
 import { Sketch } from "../_interfaces/sketch";
 import { Color } from "../_interfaces/color"
@@ -14,8 +15,7 @@ export interface Item { name: string; }
     providedIn: 'root'
 })
 export class WebsocketService {
-    private itemDoc: AngularFirestoreDocument<Item>;
-    item: Observable<Item>;
+    item: FirebaseObjectObservable<Item>;
 
     private url = 'http://localhost:3200';
     private drawSocket: Socket;
@@ -25,12 +25,12 @@ export class WebsocketService {
     private _rainbowize: boolean = false;
 
     constructor(
-        private colorGen: ColorGenService,
-        private afs: AngularFirestore,
-        private db: AngularFirestore
+        private db: AngularFireDatabase
         ) {
-        this.itemDoc = afs.doc<Item>('sketch/1');
-        this.item = this.itemDoc.valueChanges();
+    }
+
+    getItems(text: string): FirebaseObjectObservable<any>{
+
     }
 
     rainbowize () {
