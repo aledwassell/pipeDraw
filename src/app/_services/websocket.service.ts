@@ -29,10 +29,6 @@ export class WebsocketService {
         ) {
     }
 
-    getItems(text: string): FirebaseObjectObservable<any>{
-
-    }
-
     rainbowize () {
         this._rainbowize = !this._rainbowize;
         console.log(this.item);

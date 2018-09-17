@@ -23,6 +23,14 @@
           messagingSenderId: "1078613536326"
       };
       firebase.initializeApp(config);
+
+      let root = firebase.database().ref();
+
+
+      root.on('value', (snap) => {
+          console.log(snap.val());
+      });
+
   </script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <base href="/">
