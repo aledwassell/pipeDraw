@@ -1,20 +1,16 @@
 import {Injectable, OnInit} from '@angular/core';
-import {AngularFireDatabase} from "@angular/fire/database";
+import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable, observable, Observer, Subject} from "rxjs";
 import { Sketch } from "../_interfaces/sketch";
-import { Color } from "../_interfaces/color"
-import * as io from 'socket.io-client';
+import { Color } from "../_interfaces/color";
 import { FormControl } from "@angular/forms"
 import {Socket} from "../_interfaces/socket";
-import {ColorGenService} from "./color-gen.service"
-
-export interface Item { name: string; }
+import {ColorGenService} from "./color-gen.service";
 
 @Injectable({
     providedIn: 'root'
 })
-export class WebsocketService implements OnInit{
-    public items;
+export class WebsocketService implements OnInit {
     private url = 'http://localhost:3200';
     private drawSocket: Socket;
     private drawObserver: Observer<any>;
@@ -22,24 +18,23 @@ export class WebsocketService implements OnInit{
     private observer: Observer<any>;
     private _rainbowize: boolean = false;
 
-    constructor(private db: AngularFireDatabase) {
+    constructor(private db: AngularFirestore) {
     }
 
     ngOnInit() {
-        this.items = this.db.list('/');
-        console.log(this.items);
     }
     rainbowize () {
         this._rainbowize = !this._rainbowize;
-        console.log(this.items);
     }
 
     emitDrawData(d: Sketch): void {
-        this.socket.emit('data', d);
+        console.log(d);
+        this.db.collection('sketch').doc('1').update(d);
+        // this.socket.emit('data', d);
     }
     getDrawData(): Observable<any> {
         let observable = new Observable(observer => {
-            this.drawSocket = io(this.url);
+            this.drawSocket;
             this.drawSocket.on('data', (res) => {
                 observer.next(res);
             });
@@ -61,7 +56,7 @@ export class WebsocketService implements OnInit{
     }
     getBrushSize(): Observable<number> {
         let observable = new Observable<number>(observer => {
-            this.socket = io(this.url);
+            this.socket;
             this.socket.on('brushSize', data => {
                 observer.next(data);
             });
@@ -71,7 +66,7 @@ export class WebsocketService implements OnInit{
     }
     getColor(): Observable<Color> {
         let observable = new Observable<Color>(observer => {
-            this.socket = io(this.url);
+            this.socket;
             this.socket.on('color', data => {
                 observer.next(data);
             });
@@ -82,7 +77,7 @@ export class WebsocketService implements OnInit{
 
     getMessages(): Observable<any> {
         let observable = new Observable(observer => {
-            this.socket = io(this.url);
+            this.socket;
             this.socket.on('message', data => {
                 observer.next(data);
             });
