@@ -13,7 +13,7 @@ export interface Item { name: string; }
 @Injectable({
     providedIn: 'root'
 })
-export class WebsocketService {
+export class WebsocketService implements OnInit{
     public items;
     private url = 'http://localhost:3200';
     private drawSocket: Socket;
@@ -22,11 +22,13 @@ export class WebsocketService {
     private observer: Observer<any>;
     private _rainbowize: boolean = false;
 
-    constructor(db: AngularFireDatabase) {
-        this.items = db.list('/todos');
-        console.log(this.items);
+    constructor(private db: AngularFireDatabase) {
     }
 
+    ngOnInit() {
+        this.items = this.db.list('/');
+        console.log(this.items);
+    }
     rainbowize () {
         this._rainbowize = !this._rainbowize;
         console.log(this.items);
