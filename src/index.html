@@ -12,26 +12,6 @@
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-functions.js"></script>
-  <script>
-      // Initialize Firebase
-      var config = {
-          apiKey: "AIzaSyBaIGGCeX2E8TZjjAkxGNU5U0jtjRbagWE",
-          authDomain: "draw-chat-11c2f.firebaseapp.com",
-          databaseURL: "https://draw-chat-11c2f.firebaseio.com",
-          projectId: "draw-chat-11c2f",
-          storageBucket: "draw-chat-11c2f.appspot.com",
-          messagingSenderId: "1078613536326"
-      };
-      firebase.initializeApp(config);
-
-      let root = firebase.database().ref();
-
-
-      root.on('value', (snap) => {
-          console.log(snap.val());
-      });
-
-  </script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <base href="/">
   <script>
@@ -45,5 +25,6 @@
 </head>
 <body>
   <app-root></app-root>
+
 </body>
 </html>

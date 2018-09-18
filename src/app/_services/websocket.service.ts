@@ -1,6 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
-import {AngularFireDatabase, FirebaseObjectObservable} from "@angular/fire/database";
+import {AngularFireDatabase} from "@angular/fire/database";
 import {Observable, observable, Observer, Subject} from "rxjs";
 import { Sketch } from "../_interfaces/sketch";
 import { Color } from "../_interfaces/color"
@@ -15,8 +14,7 @@ export interface Item { name: string; }
     providedIn: 'root'
 })
 export class WebsocketService {
-    item: FirebaseObjectObservable<Item>;
-
+    public items;
     private url = 'http://localhost:3200';
     private drawSocket: Socket;
     private drawObserver: Observer<any>;
@@ -24,14 +22,14 @@ export class WebsocketService {
     private observer: Observer<any>;
     private _rainbowize: boolean = false;
 
-    constructor(
-        private db: AngularFireDatabase
-        ) {
+    constructor(db: AngularFireDatabase) {
+        this.items = db.list('/todos');
+        console.log(this.items);
     }
 
     rainbowize () {
         this._rainbowize = !this._rainbowize;
-        console.log(this.item);
+        console.log(this.items);
     }
 
     emitDrawData(d: Sketch): void {
