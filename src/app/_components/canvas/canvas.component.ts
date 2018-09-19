@@ -9,12 +9,14 @@ import * as P5 from "p5";
 @Component({
     selector: 'app-canvas',
     template: `
+        {{sketchData | json}}
         <div id="canvas"></div>
     `,
     styleUrls: ['./canvas.component.css']
 })
 export class CanvasComponent implements OnInit {
     sub: Subscription;
+    sketchData: any;
     color: Color;
     background: Color;
     BrushSize: number;
@@ -22,34 +24,19 @@ export class CanvasComponent implements OnInit {
     constructor(private webSocket: WebsocketService,
                 private colorGen: ColorGenService) {
         this.BrushSize = 20;
-        this.color = {hex: this.colorGen.randColor, type: 'pen'};
-        this.background = {hex: '#ffffff', type: 'canvas'};
+        this.color = {hex: this.colorGen.randColor};
     }
     ngOnInit() {
         this.createCanvas();
         this.drawFunction();
-        this.sub = this.webSocket.getDrawData()
+        this.sub = this.webSocket.getSketchData()
             .subscribe(
                 data => {
+                    console.log(data);
                     this.draw(data);
+                    this.sketchData = data;
                 }
             );
-        this.webSocket.getColor()
-            .subscribe(
-                c => {
-                    console.log(c);
-                    if (c.type === 'pen') {
-                        this.color = c;
-                    } else if (c.type === 'canvas') {
-                        this.background = c;
-                    }
-                }
-            );
-        this.webSocket.getBrushSize().subscribe(
-            s => {
-                this.BrushSize = s;
-            }
-        );
     }
     private drawFunction = () => {
         this.p5.mouseDragged = () => {

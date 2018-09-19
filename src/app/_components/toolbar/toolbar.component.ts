@@ -11,7 +11,6 @@ import {Color} from "../../_interfaces/color";
 })
 export class ToolbarComponent implements OnInit {
     private brushSize: number;
-    public backgroundColor: Color;
     public arrayColors: any = [
         {hex: this.colorGen.randColor, type: 'pen'}
     ];
@@ -27,10 +26,9 @@ export class ToolbarComponent implements OnInit {
         this.webSocket.getBrushSize().subscribe(
             s => this.brushSize = s
         );
-        this.backgroundColor = {hex: this.colorGen.randColor, type: 'pen'};
     }
     addColor(): void {
-        this.arrayColors.push({hex: this.colorGen.randColor, type: 'pen'});
+        this.arrayColors.push({hex: this.colorGen.randColor});
     }
     removeColor(): void {
         this.arrayColors.pop();
@@ -43,20 +41,15 @@ export class ToolbarComponent implements OnInit {
         if (type === 'background') {
             this.backgroundColor.hex = color;
         }
-        this.onColorChange({hex: color, type: type});
-    }
-
-    rainbowize(): void {
-        this.webSocket.rainbowize();
+        this.onColorChange({hex: color});
     }
 
     onColorChange(e: Color): void {
-        console.log(e);
         this.webSocket.emitColorChange(e);
     }
 
     brushSizeChange(evt): void {
         this.brushSize = evt.value;
-        this.webSocket.emitBrushSizeChange(evt.value);
+        this.webSocket.emitBrushSizeChange({brushSize: evt.value});
     }
 }

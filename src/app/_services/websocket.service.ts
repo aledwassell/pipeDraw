@@ -6,83 +6,46 @@ import { Color } from "../_interfaces/color";
 import { FormControl } from "@angular/forms"
 import {Socket} from "../_interfaces/socket";
 import {ColorGenService} from "./color-gen.service";
+import {AngularFireDatabase} from "@angular/fire/database";
+import {FirebaseListObservable, FirebaseObjectObservable} from "@angular/fire/database-deprecated";
 
 @Injectable({
     providedIn: 'root'
 })
-export class WebsocketService implements OnInit {
+export class WebsocketService {
+    private sketch: FirebaseObjectObservable<any>;
+    public sketchData: Observable<any>;
     private url = 'http://localhost:3200';
     private drawSocket: Socket;
     private drawObserver: Observer<any>;
     private socket: Socket;
     private observer: Observer<any>;
-    private _rainbowize: boolean = false;
 
-    constructor(private db: AngularFirestore) {
+    constructor(private db: AngularFireDatabase) {
+        this.sketch = db.object('sketch').valueChanges();
+        this.sketch.subscribe(
+            d => this.sketchData = d
+        );
     }
 
-    ngOnInit() {
-    }
-    rainbowize () {
-        this._rainbowize = !this._rainbowize;
+    getSketchData(): Observable<any> {
+        return this.sketchData;
     }
 
     emitDrawData(d: Sketch): void {
-        console.log(d);
-        this.db.collection('sketch').doc('1').update(d);
-        // this.socket.emit('data', d);
-    }
-    getDrawData(): Observable<any> {
-        let observable = new Observable(observer => {
-            this.drawSocket;
-            this.drawSocket.on('data', (res) => {
-                observer.next(res);
-            });
-            return;
-        });
-        return observable;
+        this.db.object('sketch').update(d);
     }
 
-    emitMessage(m: FormControl): Observable<FormControl> {
-        return this.socket.emit('message', m);
+    emitMessage(m: FormControl): void {
+        console.log(m);
+        this.db.object('messages').update({message: m});
     }
 
     emitColorChange(c: Color): void {
-        this.socket.emit('color', c);
+        this.db.object('sketch').update(c);
     }
 
-    emitBrushSizeChange(d: number): void {
-        this.socket.emit('brushSize', d);
-    }
-    getBrushSize(): Observable<number> {
-        let observable = new Observable<number>(observer => {
-            this.socket;
-            this.socket.on('brushSize', data => {
-                observer.next(data);
-            });
-            return;
-        });
-        return observable;
-    }
-    getColor(): Observable<Color> {
-        let observable = new Observable<Color>(observer => {
-            this.socket;
-            this.socket.on('color', data => {
-                observer.next(data);
-            });
-            return;
-        });
-        return observable;
-    }
-
-    getMessages(): Observable<any> {
-        let observable = new Observable(observer => {
-            this.socket;
-            this.socket.on('message', data => {
-                observer.next(data);
-            });
-            return;
-        });
-        return observable;
+    emitBrushSizeChange(d: object): void {
+        this.db.object('sketch').update(d);
     }
 }
