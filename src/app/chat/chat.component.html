@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline">
+    <mat-label>Message</mat-label>
+    <input matInput [(ngModel)]="message" (keydown.enter)="sendMessage(message)" placeholder="Chat">
+    <button mat-button matSuffix mat-icon-button aria-label="Send" (click)="sendMessage(message)">
+        <mat-icon>send</mat-icon>
+    </button>
+</mat-form-field>
+<div class="message-box" *ngIf="messages && messages.length > 0">
+    <p *ngFor="let m of messages">{{m}}</p>
+</div>
