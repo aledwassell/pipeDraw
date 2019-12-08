@@ -1,44 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
-import {WebsocketService} from '../model/websocket.service';
+import { WebsocketService } from '../model/websocket.service';
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+    selector: 'app-chat',
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  messageSubscription: Subscription;
-  messages = [];
-  message: string = '';
+    messages = [];
+    private message: string = '';
+    private clear = new Subject();
 
-  constructor(private dataService: WebsocketService) {
-  }
+    constructor(private dataService: WebsocketService) { }
 
-  ngOnInit() {
-      this.messageSubscription = this.dataService.messageSocket.asObservable()
-          .subscribe(
-              m => {
-                  if (this.message) {
-                      this.message = '';
-                  }
-                  this.messages.push(m.message);
-              }
-          );
-  }
+    ngOnInit() {
+        this.dataService.messageSocket
+            .asObservable()
+            .pipe(takeUntil(this.clear))
+            .subscribe(
+                m => {
+                    if (this.message) {
+                        this.message = '';
+                    }
+                    this.messages.push(m.chatMsg);
+                }
+            );
+    }
 
-  keyDownEnter(event) {
-      if (event.keyCode === 13) {
-          this.sendMessage();
-      }
-  }
+    keyDownEnter(event) {
+        if (event.keyCode === 13) {
+            this.sendMessage();
+        }
+    }
 
-  sendMessage(): void {
-      this.dataService.postMessage(this.message);
-  }
+    sendMessage(): void {
+        this.dataService.messageSocket.next({chatMsg: this.message});;
+    }
 
-  ngOnDestroy() {
-      this.messageSubscription.unsubscribe();
-  }
+    ngOnDestroy() {
+        this.clear.next();
+    }
 }
