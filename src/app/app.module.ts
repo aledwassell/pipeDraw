@@ -14,7 +14,7 @@ import {MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule} from
   declarations: [
     AppComponent,
     CanvasComponent,
-    ChatComponent
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Subscription, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
-import { WebsocketService } from '../model/websocket.service';
+import {Component, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {WebsocketService} from '../model/websocket.service';
 
 @Component({
-    selector: 'app-chat',
+    selector: 'chat',
     templateUrl: './chat.component.html',
     styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
     messages = [];
     private message: string = '';
-    private clear = new Subject();
+    private subject = new Subject();
 
     constructor(private dataService: WebsocketService) { }
 
     ngOnInit() {
         this.dataService.messageSocket
             .asObservable()
-            .pipe(takeUntil(this.clear))
+            .pipe(takeUntil(this.subject))
             .subscribe(
                 m => {
                     if (this.message) {
@@ -41,6 +40,6 @@ export class ChatComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.clear.next();
+        this.subject.next();
     }
 }
